@@ -56,6 +56,10 @@
 		844D3D9919B5A2EC00D5FAA8 /* ZWRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 844D3D9819B5A2EC00D5FAA8 /* ZWRequest.m */; };
 		844D3DB619B5BAFC00D5FAA8 /* HTTPUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 844D3DB519B5BAFC00D5FAA8 /* HTTPUtil.m */; };
 		844D3DB919B5CC6A00D5FAA8 /* ZWResquestData.m in Sources */ = {isa = PBXBuildFile; fileRef = 844D3DB819B5CC6A00D5FAA8 /* ZWResquestData.m */; };
+		84DABD2519BEF93200CB99A5 /* ZWShareData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DABD2419BEF93200CB99A5 /* ZWShareData.m */; };
+		84DABD2819BEFF8500CB99A5 /* ZWXXXList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DABD2719BEFF8500CB99A5 /* ZWXXXList.m */; };
+		84DABD2E19BF066800CB99A5 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DABD2D19BF066800CB99A5 /* HexColor.m */; };
+		84DABD3219BF06BE00CB99A5 /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DABD3119BF06BE00CB99A5 /* UIImage+fixOrientation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +162,15 @@
 		844D3DB519B5BAFC00D5FAA8 /* HTTPUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPUtil.m; sourceTree = "<group>"; };
 		844D3DB719B5CC6A00D5FAA8 /* ZWResquestData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWResquestData.h; sourceTree = "<group>"; };
 		844D3DB819B5CC6A00D5FAA8 /* ZWResquestData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWResquestData.m; sourceTree = "<group>"; };
+		84DABD2319BEF93200CB99A5 /* ZWShareData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWShareData.h; sourceTree = "<group>"; };
+		84DABD2419BEF93200CB99A5 /* ZWShareData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWShareData.m; sourceTree = "<group>"; };
+		84DABD2619BEFF8500CB99A5 /* ZWXXXList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWXXXList.h; sourceTree = "<group>"; };
+		84DABD2719BEFF8500CB99A5 /* ZWXXXList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWXXXList.m; sourceTree = "<group>"; };
+		84DABD2A19BF041300CB99A5 /* Consts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
+		84DABD2C19BF066800CB99A5 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
+		84DABD2D19BF066800CB99A5 /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
+		84DABD3019BF06BE00CB99A5 /* UIImage+fixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+fixOrientation.h"; sourceTree = "<group>"; };
+		84DABD3119BF06BE00CB99A5 /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,6 +247,10 @@
 				844D3D0D19B5A0BE00D5FAA8 /* Images.xcassets */,
 				844D3D9019B5A0DC00D5FAA8 /* ZWViewController */,
 				840C5A0B19B6E7B40007F1C3 /* Request */,
+				84DABD2219BEF8DE00CB99A5 /* Data */,
+				84DABD2919BF00EE00CB99A5 /* Const */,
+				84DABD2F19BF06B600CB99A5 /* Category */,
+				84DABD2B19BF065500CB99A5 /* Util */,
 				844D3D8F19B5A0D700D5FAA8 /* Network */,
 				844D3D2D19B5A0D200D5FAA8 /* Vendor */,
 				844D3D2A19B5A0CD00D5FAA8 /* Images */,
@@ -426,6 +443,43 @@
 			path = ZWViewController;
 			sourceTree = "<group>";
 		};
+		84DABD2219BEF8DE00CB99A5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				84DABD2319BEF93200CB99A5 /* ZWShareData.h */,
+				84DABD2419BEF93200CB99A5 /* ZWShareData.m */,
+				84DABD2619BEFF8500CB99A5 /* ZWXXXList.h */,
+				84DABD2719BEFF8500CB99A5 /* ZWXXXList.m */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		84DABD2919BF00EE00CB99A5 /* Const */ = {
+			isa = PBXGroup;
+			children = (
+				84DABD2A19BF041300CB99A5 /* Consts.h */,
+			);
+			path = Const;
+			sourceTree = "<group>";
+		};
+		84DABD2B19BF065500CB99A5 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				84DABD2C19BF066800CB99A5 /* HexColor.h */,
+				84DABD2D19BF066800CB99A5 /* HexColor.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		84DABD2F19BF06B600CB99A5 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				84DABD3019BF06BE00CB99A5 /* UIImage+fixOrientation.h */,
+				84DABD3119BF06BE00CB99A5 /* UIImage+fixOrientation.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -530,6 +584,7 @@
 				844D3D7619B5A0D200D5FAA8 /* AFURLConnectionOperation.m in Sources */,
 				844D3D7E19B5A0D200D5FAA8 /* SDWebImageCombinedOperation.m in Sources */,
 				844D3DB919B5CC6A00D5FAA8 /* ZWResquestData.m in Sources */,
+				84DABD2519BEF93200CB99A5 /* ZWShareData.m in Sources */,
 				844D3D7519B5A0D200D5FAA8 /* AFSecurityPolicy.m in Sources */,
 				844D3D9519B5A0DC00D5FAA8 /* CameraViewController.m in Sources */,
 				844D3D7119B5A0D200D5FAA8 /* AFHTTPRequestOperation.m in Sources */,
@@ -540,6 +595,7 @@
 				844D3D7919B5A0D200D5FAA8 /* AFURLSessionManager.m in Sources */,
 				844D3D7819B5A0D200D5FAA8 /* AFURLResponseSerialization.m in Sources */,
 				844D3D0C19B5A0BE00D5FAA8 /* AppDelegate.m in Sources */,
+				84DABD2E19BF066800CB99A5 /* HexColor.m in Sources */,
 				844D3D7A19B5A0D200D5FAA8 /* MBProgressHUD.m in Sources */,
 				844D3D7F19B5A0D200D5FAA8 /* SDWebImageCompat.m in Sources */,
 				844D3D7319B5A0D200D5FAA8 /* AFHTTPSessionManager.m in Sources */,
@@ -552,6 +608,8 @@
 				844D3D8419B5A0D200D5FAA8 /* SDWebImagePrefetcher.m in Sources */,
 				844D3D8519B5A0D200D5FAA8 /* UIButton+WebCache.m in Sources */,
 				844D3D9619B5A0DC00D5FAA8 /* ZWTabBarController.m in Sources */,
+				84DABD3219BF06BE00CB99A5 /* UIImage+fixOrientation.m in Sources */,
+				84DABD2819BEFF8500CB99A5 /* ZWXXXList.m in Sources */,
 				844D3D8919B5A0D200D5FAA8 /* UIImageView+WebCache.m in Sources */,
 				844D3D8719B5A0D200D5FAA8 /* UIImage+MultiFormat.m in Sources */,
 				844D3D8019B5A0D200D5FAA8 /* SDWebImageDecoder.m in Sources */,
