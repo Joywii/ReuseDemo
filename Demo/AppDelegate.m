@@ -8,21 +8,60 @@
 
 #import "AppDelegate.h"
 #import "ZWTabBarController.h"
+#import "ZWLoginViewController.h"
 
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    //监听登录通知
+    [self addNotification];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     ZWTabBarController *tabbarController = [[ZWTabBarController alloc] init];
     self.window.rootViewController = tabbarController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    //是否登录
+    if(![self isLogin])
+    {
+        //发送需要登录通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNeedLoginNofitication object:nil userInfo:nil] ;
+    }
+    else
+    {
+        //发送已经登录通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidLoginNotification
+                                                            object:nil
+                                                          userInfo:nil] ;
+    }
+    //添加引导页
+    
     return YES;
 }
+-(void)addNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showLoginView:)
+                                                 name:kNeedLoginNofitication
+                                               object:nil];
+}
 
+-(BOOL)isLogin
+{
+    return NO;
+}
+
+-(void)showLoginView:(NSNotification *)notification
+{
+    ZWLoginViewController *loginVC = [[ZWLoginViewController alloc]init];
+    dispatch_async(dispatch_get_main_queue(), ^(void)
+    {
+        [self.window.rootViewController presentViewController:loginVC animated:NO completion:NULL];
+    });
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

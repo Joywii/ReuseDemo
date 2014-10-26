@@ -23,7 +23,12 @@ typedef enum
     EQQAPIMESSAGECONTENTINVALID = 5,
     EQQAPIAPPNOTREGISTED = 6,
     EQQAPIAPPSHAREASYNC = 7,
-    EQQAPISENDFAILD = -1
+    EQQAPISENDFAILD = -1,
+    
+    //qzone分享不支持text类型分享
+    EQQAPIQZONENOTSUPPORTTEXT = 10000,
+    //qzone分享不支持image类型分享
+    EQQAPIQZONENOTSUPPORTIMAGE = 10001,
 } QQApiSendResultCode;
 
 
@@ -41,10 +46,9 @@ typedef enum
  向QQ App发送消息
  @param message 待发送的消息对象
  
- @return
- 成功将消息发送给QQ是返回TRUE,否则返回FALSE
+ @return 发送结果错误码
  */
-+ (int)sendMessage:(QQApiMessage *)message;
++ (QQApiSendResultCode)sendMessage:(QQApiMessage *)message;
 
 /**
  把URL反序列化成<code>QQApiMessage</code>对象，在AppDelegate的handleOpenURL中调用
@@ -73,6 +77,11 @@ typedef enum
      如果QQ已安装则返回TRUE，否则返回FALSE
  */
 + (BOOL)isQQInstalled;
+
+/**
+ 批量检测QQ号码是否在线
+ */
++ (void)getQQUinOnlineStatues:(NSArray *)QQUins delegate:(id)target;
 
 /**
  检测QQ是否支持API调用
@@ -121,8 +130,22 @@ enum
     // Message from QQ to Plugin app.
     QQApiMessageTypeSendMessageToQQResponse   = 0x06,
     
+    // Message from Plugin app to QZone,
+    QQApiMessageTypeSendMessageToQQQZoneRequest = 0x07,
+    
 	QQApiMessageTypeReserved   = 0xF0
 };
+
+/**
+ 新补充的 用来区分消息是发送给哪个平台（这个多余了 设计的有点问题）
+ */
+typedef enum
+{
+    //分享到qq
+    kShareMsgToQQ = 0x0,
+    //分享到qzone结合版
+    kShareMsgToQQQZone = 0x1,
+}QQShareType;
 
 typedef NSUInteger QQApiMessageType;
 
@@ -161,12 +184,22 @@ typedef NSUInteger QQApiMessageType;
 // Payload object definition
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// QQApiObject control flags
+enum
+{
+    kQQAPICtrlFlagQZoneShareOnStart = 0x01,
+    kQQAPICtrlFlagQZoneShareForbid = 0x02,
+};
+
 // QQApiObject
 /** \brief 所有在QQ及插件间发送的数据对象的根类。
  */
 @interface QQApiObject : NSObject
 @property(nonatomic,retain) NSString* title; ///< 标题，最长128个字符
 @property(nonatomic,retain) NSString* description; ///<简要描述，最长512个字符
+
+@property (nonatomic, assign) uint64_t cflag;
+
 @end
 
 // QQApiResultObject
@@ -274,6 +307,9 @@ typedef enum QQApiURLTargetType{
      用于分享目标内容为音频的URL的对象
  */
 @interface QQApiAudioObject : QQApiURLObject
+
+@property (nonatomic, retain) NSURL *flashURL;      ///<音频URL地址，最长512个字符
+
 /**
  获取一个autorelease的<code>QQApiAudioObject</code>
  @param url 音频内容的目标URL
@@ -301,6 +337,9 @@ typedef enum QQApiURLTargetType{
      用于分享目标内容为视频的URL的对象
  */
 @interface QQApiVideoObject : QQApiURLObject
+
+@property (nonatomic, retain) NSURL *flashURL;      ///<视频URL地址，最长512个字符
+
 /**
  获取一个autorelease的<code>QQApiVideoObject</code>
  @param url 视频内容的目标URL
@@ -355,9 +394,10 @@ typedef enum QQApiURLTargetType{
  */
 @interface QQApiPayObject : QQApiObject
 @property(nonatomic,retain)NSString* OrderNo; ///<支付订单号，必填
+@property(nonatomic,retain)NSString* AppInfo; ///<支付来源信息，必填
 
--(id)initWithOrderNo:(NSString*)OrderNo; ///<初始化方法
-+(id)objectWithOrderNo:(NSString*)OrderNo;///<工厂方法，获取一个QQApiPayObject对象.
+-(id)initWithOrderNo:(NSString*)OrderNo AppInfo:(NSString*)AppInfo; ///<初始化方法
++(id)objectWithOrderNo:(NSString*)OrderNo AppInfo:(NSString*)AppInfo;///<工厂方法，获取一个QQApiPayObject对象.
 @end
 
 // QQApiCommonContentObject;
@@ -391,4 +431,14 @@ typedef enum QQApiURLTargetType{
 @property(nonatomic,retain) NSString* description;///<描述
 @property(nonatomic,retain) NSData* imageData;///<广告图片
 @property(nonatomic,retain) NSURL* target;///<广告目标链接
+@end
+
+// QQApiWPAObject
+/** \brief 发起WPA对象
+ */
+@interface QQApiWPAObject : QQApiObject
+@property(nonatomic,retain)NSString* uin; ///<想要对话的QQ号
+
+-(id)initWithUin:(NSString*)uin; ///<初始化方法
++(id)objectWithUin:(NSString*)uin;///<工厂方法，获取一个QQApiWPAObject对象.
 @end

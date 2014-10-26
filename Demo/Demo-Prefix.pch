@@ -15,4 +15,7 @@
     #import <Foundation/Foundation.h>
     #import "Consts.h"
     #import "HexColor.h"
+    #import "ZWViewController.h"
+
+    #define kAppName @"车样"
 #endif

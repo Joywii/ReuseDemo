@@ -56,6 +56,15 @@
 /** 第三方应用在互联开放平台申请的appID */
 @property(nonatomic, retain) NSString* appId;
 
+/** 登陆透传的数据 */
+@property(nonatomic, copy) NSDictionary* passData;
+
+
+/**
+ * 返回sdk的版本号
+ */
++ (NSString *)sdkVerison;
+
 /**
  * 初始化TencentOAuth对象
  * \param appId 第三方应用在互联开放平台申请的唯一标识
@@ -64,6 +73,42 @@
  */
 - (id)initWithAppId:(NSString *)appId
         andDelegate:(id<TencentSessionDelegate>)delegate;
+
+
+/**
+ * 判断用户手机上是否安装手机QQ
+ * \return YES:安装 NO:没安装
+ */
++ (BOOL)iphoneQQInstalled;
+ 
+/**
+ * 判断用户手机上的手机QQ是否支持SSO登录
+ * \return YES:支持 NO:不支持
+ */
++ (BOOL)iphoneQQSupportSSOLogin;
+
+/**
+ * 判断用户手机上是否安装手机QZone
+ * \return YES:安装 NO:没安装
+ */
++ (BOOL)iphoneQZoneInstalled;
+
+/**
+ * 判断用户手机上的手机QZone是否支持SSO登录
+ * \return YES:支持 NO:不支持
+ */
++ (BOOL)iphoneQZoneSupportSSOLogin;
+
+/**
+ * 登录授权 / DAU统计  <b>SDK 1.9版本以后，登录授权接口建议使用该接口，以前接口将会废弃 </b>
+ *
+ * if:((openid != nil) && (accesstoken != nil)) ,进行统计DAU操作，并验证token是否有效
+ * esle: 进行登录授权操作
+ * 如果统计DAU时，发现token失效，将自动进入登录流程
+ *
+ * \param permissions 授权信息列
+ */
+- (BOOL)authorize:(NSArray *)permissions;
 
 /**
  * 登录授权
@@ -239,12 +284,47 @@
 - (BOOL)getIntimateFriends:(NSMutableDictionary *)params;
 
 /**
- * QZone定向分享，可以@到具体好友
+ * QZone定向分享，可以@到具体好友，完成后将触发responseDidReceived:forMessage:回调，message：“SendStory”
  * \param params 参数字典
  * \param fopenIdArray 第三方应用预传人好友列表，好友以openid标识
  * \return 处理结果，YES表示API调用成功，NO表示API调用失败，登录态失败，重新登录
  */
 - (BOOL)sendStory:(NSMutableDictionary *)params friendList:(NSArray *)fopenIdArray;
+
+/**
+ * 发送应用邀请，完成后将触发responseDidReceived:forMessage:回调，message：“AppInvitation”
+ * \param desc 应用的描述文字，不超过35字符，如果为nil或@“”则显示默认描述
+ * \param imageUrl 应用的图标，如果为nil或者@“”则显示默认图标
+ * \param source 透传参数，由开发者自定义该参数内容
+ * \return 处理结果，YES表示API调用成功，NO表示API调用失败，登录态失败，重新登录
+ */
+- (BOOL)sendAppInvitationWithDescription:(NSString *)desc imageURL:(NSString *)imageUrl source:(NSString *)source;
+
+/**
+ * 发起PK或者发送炫耀，完成后将触发responseDidReceived:forMessage:回调，message：“AppChallenge”
+ * \param receiver 必须指定一位进行PK或者炫耀的好友，填写其OpenID，填写多个OpenID将截取第一个
+ * \param type 类型，"pk"或者“brag”
+ * \param imageUrl 炫耀/挑战场景图的URL
+ * \param message 炫耀/挑战中的内容描述，不超过50个字符，超过限制则自动截断
+ * \param source 透传参数，由开发者自定义该参数内容
+ * \return 处理结果，YES表示API调用成功，NO表示API调用失败，登录态失败，重新登录
+ */
+- (BOOL)sendChallenge:(NSString *)receiver type:(NSString *)type imageURL:(NSString *)imageUrl message:(NSString *)message source:(NSString *)source;
+
+/**
+ * 赠送或者请求礼物，完成后将触发responseDidReceived:forMessage:回调，message：“AppGiftRequest”
+ * \param receiver 赠送或者请求礼物的好友的OpenID，支持填写多个，OpenID之用","分隔，为nil时将由用户通过好友选择器选择好友
+ * \param exclude 用户通过好友选择器选择好友场景下，希望排除的好友（不显示在好友选择器）
+ * \param specified 用户通过好友选择器选择好友场景下，希望出现的指定好友
+ * \param only 是否只显示specified指定的好友
+ * \param type 类型，"request"或者“freegift”
+ * \param title 免费礼物或请求名称，不超过6个字符
+ * \param message 礼物或请求的默认赠言，控制在35个汉字以内，超过限制自动截断
+ * \param imageUrl 请求或礼物配图的URL，如果不传，则默认在弹框中显示应用的icon
+ * \param source 透传参数，由开发者自定义该参数内容
+ * \return 处理结果，YES表示API调用成功，NO表示API调用失败，登录态失败，重新登录
+ */
+- (BOOL)sendGiftRequest:(NSString *)receiver exclude:(NSString *)exclude specified:(NSString *)specified only:(BOOL)only type:(NSString *)type title:(NSString *)title message:(NSString *)message imageURL:(NSString *)imageUrl source:(NSString *)source;
 
 /**
  * 退出指定API调用
@@ -461,10 +541,17 @@
 - (void)getIntimateFriendsResponse:(APIResponse*) response;
 
 /**
- * sendStory分享的回调
+ * sendStory分享的回调（已废弃，使用responseDidReceived:forMessage:）
  * \param response API返回结果，具体定义参见sdkdef.h文件中\ref APIResponse
  */
 - (void)sendStoryResponse:(APIResponse*) response;
+
+/**
+ * 社交API统一回调接口
+ * \param response API返回结果，具体定义参见sdkdef.h文件中\ref APIResponse
+ * \param message 响应的消息，目前支持‘SendStory’,‘AppInvitation’，‘AppChallenge’，‘AppGiftRequest’
+ */
+- (void)responseDidReceived:(APIResponse*)response forMessage:(NSString *)message;
 
 /**
  * post请求的上传进度
