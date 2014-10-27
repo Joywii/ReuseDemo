@@ -81,6 +81,13 @@
 		845E2BE119FCE53B0045BEFD /* login_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 845E2BDC19FCE53B0045BEFD /* login_weixin@2x.png */; };
 		845E2BE819FCE6640045BEFD /* ZWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845E2BE619FCE6640045BEFD /* ZWLoginViewController.m */; };
 		845E2BEB19FCF5020045BEFD /* TencentOpenApi_IOS_Bundle.bundle in Sources */ = {isa = PBXBuildFile; fileRef = 844D3D6819B5A0D200D5FAA8 /* TencentOpenApi_IOS_Bundle.bundle */; };
+		84825D7919FE9D6600E590FC /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84825D7819FE9D6600E590FC /* libsqlite3.dylib */; };
+		84825D7B19FE9D7C00E590FC /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84825D7A19FE9D7C00E590FC /* libstdc++.dylib */; };
+		84825D7D19FE9D8E00E590FC /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84825D7C19FE9D8E00E590FC /* libiconv.dylib */; };
+		84825D7F19FE9D9E00E590FC /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84825D7E19FE9D9E00E590FC /* libz.dylib */; };
+		84825D8119FE9DAC00E590FC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84825D8019FE9DAC00E590FC /* Security.framework */; };
+		84825D8319FE9DBA00E590FC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84825D8219FE9DBA00E590FC /* SystemConfiguration.framework */; };
+		84825D8519FE9DC600E590FC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84825D8419FE9DC600E590FC /* CoreTelephony.framework */; };
 		84DABD2519BEF93200CB99A5 /* ZWShareData.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DABD2419BEF93200CB99A5 /* ZWShareData.m */; };
 		84DABD2819BEFF8500CB99A5 /* ZWXXXList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DABD2719BEFF8500CB99A5 /* ZWXXXList.m */; };
 		84DABD2E19BF066800CB99A5 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DABD2D19BF066800CB99A5 /* HexColor.m */; };
@@ -221,6 +228,13 @@
 		845E2BDC19FCE53B0045BEFD /* login_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_weixin@2x.png"; sourceTree = "<group>"; };
 		845E2BE519FCE6640045BEFD /* ZWLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWLoginViewController.h; sourceTree = "<group>"; };
 		845E2BE619FCE6640045BEFD /* ZWLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWLoginViewController.m; sourceTree = "<group>"; };
+		84825D7819FE9D6600E590FC /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		84825D7A19FE9D7C00E590FC /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		84825D7C19FE9D8E00E590FC /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		84825D7E19FE9D9E00E590FC /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		84825D8019FE9DAC00E590FC /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		84825D8219FE9DBA00E590FC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		84825D8419FE9DC600E590FC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		84DABD2319BEF93200CB99A5 /* ZWShareData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWShareData.h; sourceTree = "<group>"; };
 		84DABD2419BEF93200CB99A5 /* ZWShareData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWShareData.m; sourceTree = "<group>"; };
 		84DABD2619BEFF8500CB99A5 /* ZWXXXList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWXXXList.h; sourceTree = "<group>"; };
@@ -237,6 +251,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84825D8519FE9DC600E590FC /* CoreTelephony.framework in Frameworks */,
+				84825D8319FE9DBA00E590FC /* SystemConfiguration.framework in Frameworks */,
+				84825D8119FE9DAC00E590FC /* Security.framework in Frameworks */,
+				84825D7F19FE9D9E00E590FC /* libz.dylib in Frameworks */,
+				84825D7D19FE9D8E00E590FC /* libiconv.dylib in Frameworks */,
+				84825D7B19FE9D7C00E590FC /* libstdc++.dylib in Frameworks */,
+				84825D7919FE9D6600E590FC /* libsqlite3.dylib in Frameworks */,
 				844D3D8C19B5A0D200D5FAA8 /* libWeiboSDK.a in Frameworks */,
 				844D3CFE19B5A0BE00D5FAA8 /* CoreGraphics.framework in Frameworks */,
 				844D3D8E19B5A0D200D5FAA8 /* libWeChatSDK.a in Frameworks */,
@@ -290,6 +311,13 @@
 		844D3CFA19B5A0BE00D5FAA8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84825D8419FE9DC600E590FC /* CoreTelephony.framework */,
+				84825D8219FE9DBA00E590FC /* SystemConfiguration.framework */,
+				84825D8019FE9DAC00E590FC /* Security.framework */,
+				84825D7E19FE9D9E00E590FC /* libz.dylib */,
+				84825D7C19FE9D8E00E590FC /* libiconv.dylib */,
+				84825D7A19FE9D7C00E590FC /* libstdc++.dylib */,
+				84825D7819FE9D6600E590FC /* libsqlite3.dylib */,
 				844D3CFB19B5A0BE00D5FAA8 /* Foundation.framework */,
 				844D3CFD19B5A0BE00D5FAA8 /* CoreGraphics.framework */,
 				844D3CFF19B5A0BE00D5FAA8 /* UIKit.framework */,
@@ -934,6 +962,7 @@
 					"$(PROJECT_DIR)/Demo/Vendor/Share/Weibo",
 					"$(PROJECT_DIR)/Demo/Vendor/Share/Weixin",
 				);
+				OTHER_LDFLAGS = "-fobjc-arc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -957,6 +986,7 @@
 					"$(PROJECT_DIR)/Demo/Vendor/Share/Weibo",
 					"$(PROJECT_DIR)/Demo/Vendor/Share/Weixin",
 				);
+				OTHER_LDFLAGS = "-fobjc-arc";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

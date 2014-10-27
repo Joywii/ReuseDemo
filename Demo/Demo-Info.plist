@@ -26,10 +26,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>tecent</string>
+			<string>tencentopenapi</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tecent1103383302</string>
+				<string>tencent1103383302</string>
 			</array>
 		</dict>
 	</array>
