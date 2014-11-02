@@ -24,6 +24,8 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBarHidden = YES;
+    
     UIImageView *backImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     backImageView.image = [UIImage imageNamed:@"bg_login"];
     [self.view addSubview:backImageView];

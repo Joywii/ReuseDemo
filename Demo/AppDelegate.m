@@ -42,7 +42,7 @@
     if(![self isLogin])
     {
         //发送需要登录通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:kNeedLoginNofitication object:nil userInfo:nil] ;
+        //[[NSNotificationCenter defaultCenter] postNotificationName:kNeedLoginNofitication object:nil userInfo:nil] ;
     }
     else
     {
@@ -71,9 +71,11 @@
 -(void)showLoginView:(NSNotification *)notification
 {
     ZWLoginViewController *loginVC = [[ZWLoginViewController alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:loginVC];
+
     dispatch_async(dispatch_get_main_queue(), ^(void)
     {
-        [self.window.rootViewController presentViewController:loginVC animated:NO completion:NULL];
+        [self.window.rootViewController presentViewController:nav animated:NO completion:NULL];
     });
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
