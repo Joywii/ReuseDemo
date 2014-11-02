@@ -12,10 +12,12 @@
 typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
 {
     WeiboSDKResponseStatusCodeSuccess               = 0,//成功
-    WeiboSDKResponseStatusCodeUserCancel            = -1,//用户取消发送
+    WeiboSDKResponseStatusCodeUserCancel            = -1,//用户取消
     WeiboSDKResponseStatusCodeSentFail              = -2,//发送失败
     WeiboSDKResponseStatusCodeAuthDeny              = -3,//授权失败
     WeiboSDKResponseStatusCodeUserCancelInstall     = -4,//用户取消安装微博客户端
+    
+    WeiboSDKResponseStatusCodeShareInSDKFailed      = -8,//分享失败 详情见response UserInfo
     WeiboSDKResponseStatusCodeUnsupport             = -99,//不支持的请求
     WeiboSDKResponseStatusCodeUnknown               = -100,
 };
@@ -38,6 +40,18 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
  @return 已安装返回YES，未安装返回NO
  */
 + (BOOL)isWeiboAppInstalled;
+
+/**
+ 检查用户是否可以通过微博客户端进行分享
+ @return 可以使用返回YES，不可以使用返回NO
+ */
++ (BOOL)isCanShareInWeiboAPP;
+
+/**
+ 检查用户是否可以使用微博客户端进行SSO授权
+ @return 可以使用返回YES，不可以使用返回NO
+ */
++ (BOOL)isCanSSOInWeiboApp;
 
 /**
  打开微博客户端程序
@@ -116,7 +130,7 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
  @param token 第三方应用之前申请的Token
  @param delegate WBHttpRequestDelegate对象，用于接收微博SDK对于发起的接口请求的请求的响应
  @param tag 用户自定义TAG,将通过回调WBHttpRequest实例的tag属性返回
- 
+
  */
 + (void)logOutWithToken:(NSString *)token delegate:(id<WBHttpRequestDelegate>)delegate withTag:(NSString*)tag;
 
@@ -125,15 +139,15 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
  调用此接口后，将发送私信至好友，成功将返回微博标准私信结构
  @param data 邀请数据。必须为json字串的形式，必须做URLEncode，采用UTF-8编码。
  data参数支持的参数：
- 参数名称	值的类型	是否必填	说明描述
- text	string	true	要回复的私信文本内容。文本大小必须小于300个汉字。
- url	string	false	邀请点击后跳转链接。默认为当前应用地址。
- invite_logo	string	false	邀请Card展示时的图标地址，大小必须为80px X 80px，仅支持PNG、JPG格式。默认为当前应用logo地址。
+    参数名称	值的类型	是否必填	说明描述
+    text	string	true	要回复的私信文本内容。文本大小必须小于300个汉字。
+    url	string	false	邀请点击后跳转链接。默认为当前应用地址。
+    invite_logo	string	false	邀请Card展示时的图标地址，大小必须为80px X 80px，仅支持PNG、JPG格式。默认为当前应用logo地址。
  @param uid  被邀请人，需为当前用户互粉好友。
  @param access_token 第三方应用之前申请的Token
  @param delegate WBHttpRequestDelegate对象，用于接收微博SDK对于发起的接口请求的请求的响应
  @param tag 用户自定义TAG,将通过回调WBHttpRequest实例的tag属性返回
- 
+
  */
 +(void)inviteFriend:(NSString* )data withUid:(NSString *)uid withToken:(NSString *)access_token delegate:(id<WBHttpRequestDelegate>)delegate withTag:(NSString*)tag;
 
@@ -254,10 +268,10 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
  @param tag 用户自定义TAG,将通过回调WBHttpRequest实例的tag属性返回
  */
 + (WBHttpRequest *)requestWithURL:(NSString *)url
-                       httpMethod:(NSString *)httpMethod
-                           params:(NSDictionary *)params
-                         delegate:(id<WBHttpRequestDelegate>)delegate
-                          withTag:(NSString *)tag;
+            httpMethod:(NSString *)httpMethod
+                params:(NSDictionary *)params
+              delegate:(id<WBHttpRequestDelegate>)delegate
+               withTag:(NSString *)tag;
 
 
 /**
@@ -271,11 +285,11 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
  @param tag 用户自定义TAG,将通过回调WBHttpRequest实例的tag属性返回
  */
 + (WBHttpRequest *)requestWithAccessToken:(NSString *)accessToken
-                                      url:(NSString *)url
-                               httpMethod:(NSString *)httpMethod
-                                   params:(NSDictionary *)params
-                                 delegate:(id<WBHttpRequestDelegate>)delegate
-                                  withTag:(NSString *)tag;
+                           url:(NSString *)url
+                    httpMethod:(NSString *)httpMethod
+                        params:(NSDictionary *)params
+                      delegate:(id<WBHttpRequestDelegate>)delegate
+                       withTag:(NSString *)tag;
 /**
  取消网络请求接口
  调用此接口后，将取消当前网络请求，建议同时[WBHttpRequest setDelegate:nil];
@@ -377,7 +391,7 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
 
 /**
  微博开放平台第三方应用授权回调页地址，默认为`http://`
- 
+
  参考 http://open.weibo.com/wiki/%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6%E8%AF%B4%E6%98%8E#.E5.AE.A2.E6.88.B7.E7.AB.AF.E9.BB.98.E8.AE.A4.E5.9B.9E.E8.B0.83.E9.A1.B5
  
  @warning 必须保证和在微博开放平台应用管理界面配置的“授权回调页”地址一致，如未进行配置则默认为`http://`
@@ -393,6 +407,17 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
  @warning 长度小于1K
  */
 @property (nonatomic, retain) NSString *scope;
+
+/**
+ 当用户没有安装微博客户端或微博客户端过低无法支持SSO的时候是否弹出SDK自带的Webview进行授权
+ 
+ 如果设置为YES，当用户没有安装微博客户端或微博客户端过低无法支持SSO的时候会自动弹出SDK自带的Webview进行授权。
+
+ 如果设置为NO，会根据 shouldOpenWeiboAppInstallPageIfNotInstalled 属性判断是否弹出安装/更新微博的对话框
+ 
+ 默认为YES
+ */
+@property (nonatomic, assign) BOOL shouldShowWebViewForAuthIfCannotSSO;
 
 @end
 
@@ -463,10 +488,27 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
 
 /**
  返回一个 WBSendMessageToWeiboRequest 对象
- @param message 需要发送给微博客户端程序的消息对象
+ 此方法生成对象被[WeiboSDK sendRequest:]会唤起微博客户端的发布器进行分享，如果未安装微博客户端或客户端版本太低
+ 会根据 shouldOpenWeiboAppInstallPageIfNotInstalled 属性判断是否弹出安装/更新微博的对话框
+ @param message 需要发送给微博客户端的消息对象
  @return 返回一个*自动释放的*WBSendMessageToWeiboRequest对象
  */
 + (id)requestWithMessage:(WBMessageObject *)message;
+
+/**
+ 返回一个 WBSendMessageToWeiboRequest 对象
+ 
+ 当用户安装了可以支持微博客户端內分享的微博客户端时,会自动唤起微博并分享
+ 当用户没有安装微博客户端或微博客户端过低无法支持通过客户端內分享的时候会自动唤起SDK內微博发布器
+ 
+ @param message 需要发送给微博的消息对象
+ @param authRequest 授权相关信息,与access_token二者至少有一个不为空,当access_token为空并且需要弹出SDK內发布器时会通过此信息先进行授权后再分享
+ @param access_token 第三方应用之前申请的Token,当此值不为空并且无法通过客户端分享的时候,会使用此token进行分享。
+ @return 返回一个*自动释放的*WBSendMessageToWeiboRequest对象
+ */
++ (id)requestWithMessage:(WBMessageObject *)message
+                authInfo:(WBAuthorizeRequest *)authRequest
+            access_token:(NSString *)access_token;
 
 @end
 
@@ -475,6 +517,10 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
  */
 @interface WBSendMessageToWeiboResponse : WBBaseResponse
 
+/**
+ 可能在分享过程中用户进行了授权操作，当此值不为空时，为用户相应授权信息
+ */
+@property (nonatomic,retain) WBAuthorizeResponse *authResponse;
 @end
 
 #pragma mark - MessageObject / ImageObject
@@ -495,7 +541,7 @@ typedef NS_ENUM(NSInteger, WeiboSDKResponseStatusCode)
 
 /**
  消息的图片内容
- 
+
  @see WBImageObject
  */
 @property (nonatomic, retain) WBImageObject *imageObject;

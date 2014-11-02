@@ -8,6 +8,7 @@
 
 #import "ZWLoginViewController.h"
 #import <TencentOpenAPI/TencentOAuth.h>
+#import "WeiboSDK.h"
 
 
 @interface ZWLoginViewController ()<TencentSessionDelegate>
@@ -54,6 +55,9 @@
     
     //QQ登录
     self.tencentOAuth = [[TencentOAuth alloc] initWithAppId:kTecentAppID andDelegate:self];
+    
+    //微博登录
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weiboLoginSuccess:) name:kWeiboLoginNotification object:nil];
 }
 - (void)loginWithQQ
 {
@@ -148,6 +152,24 @@
     {
     }
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)loginWithWeibo
+{
+    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+    request.redirectURI = kWeiboDirectURI;
+    request.scope = @"all";
+    [WeiboSDK sendRequest:request];
+}
+- (void)weiboLoginSuccess:(NSNotification *)notification
+{
+    
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)loginWithWeixin
+{
+    
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)login:(id)sender
 {
@@ -157,6 +179,7 @@
         case 0:
         {
             //微信登录
+            [self loginWithWeixin];
             break;
         }
         case 1:
@@ -168,6 +191,7 @@
         case 2:
         {
             //新浪登录
+            [self loginWithWeibo];
             break;
         }
         default:

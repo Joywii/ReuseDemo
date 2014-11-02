@@ -8,6 +8,8 @@
 
 #import "ZWTabBarController.h"
 #import "CameraViewController.h"
+#import "ZWHomeViewController.h"
+#import "ZWPlazaViewController.h"
 
 @interface ZWTabBarController()
 
@@ -26,8 +28,11 @@
     [super viewDidLoad];
     self.view.clipsToBounds = YES;
     
-    UIViewController *firstViewController = [[UIViewController alloc] init];
-    firstViewController.view.backgroundColor = [UIColor orangeColor];
+    ZWHomeViewController *homeViewController = [[ZWHomeViewController alloc] init];
+    UINavigationController *homeNavController = [[UINavigationController alloc] initWithRootViewController:homeViewController];
+    
+    ZWPlazaViewController *plazaViewController = [[ZWPlazaViewController alloc] init];
+    UINavigationController *plazaNavController = [[UINavigationController alloc] initWithRootViewController:plazaViewController];
     
     UIViewController *secondViewController = [[UIViewController alloc] init];
     secondViewController.view.backgroundColor = [UIColor magentaColor];
@@ -42,7 +47,7 @@
     UIViewController *blankViewController = [[UIViewController alloc] init];
     blankViewController.view.backgroundColor = [UIColor grayColor];
 
-    self.viewControllers = @[firstViewController,secondViewController,blankViewController,thirdViewController,fourthViewController];
+    self.viewControllers = @[homeNavController,plazaNavController,blankViewController,thirdViewController,fourthViewController];
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     UIView *backView = [[UIView alloc] initWithFrame:self.tabBar.bounds];
